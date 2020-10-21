@@ -2,13 +2,14 @@ version: '3'
 
 services:
   ocsapplication:
-    image: ocsinventory/ocsinventory-docker-image:2.8
+    image: ocsinventory-server-ssl:2.8
     container_name : ocsinventory-server
     restart: always
     ports:
       - 80:80
       - 443:443
     volumes:
+      - ./certs/:/etc/ocs-certs/
       - "perlcomdata:/etc/ocsinventory-server"
       - "ocsreportsdata:/usr/share/ocsinventory-reports/ocsreports"
       - "varlibdata:/var/lib/ocsinventory-reports"
@@ -20,6 +21,9 @@ services:
       OCS_DB_NAME: ocsweb
       # See documentation to set up SSL for MySQL
       OCS_SSL_ENABLED: 0
+      # SSL certificate
+      OCS_SSL_KEY: /etc/ocs-certs/server.key
+      OCS_SSL_CERT: /etc/ocs-certs/server.cert
     links:
       - ocsdb
     networks:
@@ -31,6 +35,7 @@ services:
     image : mysql:5.7
     container_name : ocsinventory-db
     restart: always
+    command: --max-allowed-packet 10485760
     ports :
       - 3306:3306
     volumes :

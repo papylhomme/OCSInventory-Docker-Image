@@ -42,6 +42,7 @@ RUN yum ${YUM_FLAGS} install wget \
     perl-Switch \
     perl-Apache-DBI \
     httpd \
+    mod_ssl \
     php73-php \
     php73-php-cli \
     php73-php-cli \
