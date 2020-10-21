@@ -2,6 +2,7 @@ version: '3'
 
 services:
   ocsapplication:
+    build: ./
     image: ocsinventory-server-ssl:2.8
     container_name : ocsinventory-server
     restart: always
